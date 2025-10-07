@@ -1,1 +1,15 @@
-"{}" 
+{
+  "name": "qa-mini-framework",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.7.0"
+  },
+  "scripts": {
+    "test:api": "npx playwright test tests/api",
+    "test:ui": "npx playwright test tests/ui",
+    "test:all": "npx playwright test",
+    "report:open": "npx playwright show-report reports"
+  }
+}
