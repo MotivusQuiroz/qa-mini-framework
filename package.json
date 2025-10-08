@@ -7,9 +7,10 @@
     "@types/node": "^24.7.0"
   },
   "scripts": {
-    "test:api": "npx playwright test tests/api",
-    "test:ui": "npx playwright test tests/ui",
-    "test:all": "npx playwright test",
-    "report:open": "npx playwright show-report reports"
+	"test:api": "npx playwright test tests/api",
+	"test:ui": "npx playwright test tests/ui",
+	"test:all": "npx playwright test",
+	"report:open": "npx playwright show-report reports",
+	"dev:ui": "http-server -p 5173 -c-1 ."
   }
 }
