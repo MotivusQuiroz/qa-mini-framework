@@ -73,4 +73,5 @@ npx playwright test "tests/ui/.*stage8.*\.spec\.ts"
 
 ### Notes
 - Reports and artifacts are **local only**; they are not pushed to Git.  
-- Opening reports does **not** require the dev server; only running UI tests does.
+- Opening or viewing reports (npx playwright show-report reports) does **not** require the dev server; only running UI tests does.
+- Keep your dev server running if you execute UI tests manually
