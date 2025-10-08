@@ -123,3 +123,72 @@ This project uses environment variables for configuration.
      ```
 
 ⚠️ Never commit real secrets or `.env` files into Git — only `.env.example` with safe defaults should be committed.
+
+---
+
+## Repo Map (Stage 12)
+
+Project structure overview:
+
+```
+source/
+├── config/                 # Configuration files (Playwright config, endpoints.json)
+├── tests/                  # Test specs
+│   ├── api/                # API tests (Stage 6)
+│   ├── ui/                 # UI tests (Stage 8)
+│   └── utils/              # Helpers (builders, assertions, env helpers)
+├── .github/workflows/      # GitHub Actions workflows (CI)
+├── package.json            # Dependencies and scripts
+├── README.md               # Project documentation
+├── reports/                # Playwright HTML reports (generated)
+└── test-results/           # Raw artifacts (screenshots, traces)
+```
+
+---
+
+## Running Tests (Stage 12)
+
+### Run API tests only
+```bash
+npx playwright test "tests/api/.*\.spec\.ts"
+```
+
+### Run UI tests only
+```bash
+npx playwright test "tests/ui/.*\.spec\.ts"
+```
+
+### Run Stage 6 API specs only
+```bash
+npx playwright test "tests/api/.*stage6.*\.spec\.ts"
+```
+
+### Run all tests
+```bash
+npx playwright test
+```
+
+### Open the last HTML report
+```bash
+npx playwright show-report reports
+```
+
+---
+
+## Troubleshooting (Stage 12)
+
+- **Error: dotenv not found** → run `npm install dotenv --save-dev`
+- **Tests fail with 201 instead of 400/422** → jsonplaceholder always returns 201 for POST; tests allow both 201 and error codes
+- **No tests found** → ensure the regex is quoted in Windows CMD:  
+  ```bat
+  npx playwright test "tests/api/.*stage6.*\.spec\.ts"
+  ```
+- **CI run is slow (~20 mins)** → first run downloads browsers; later runs are faster with cache
+
+---
+
+## Definition of Done (Stage 12)
+
+- README contains Quickstart, Repo Map, How to run tests, Reports & Artifacts, Configuration & Secrets, and Troubleshooting  
+- A new contributor can clone the repo, follow the README, and run tests successfully without extra guidance
+
