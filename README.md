@@ -8,6 +8,7 @@ Mini Playwright framework with API tests (GET/POST), basic reporting, and clean 
 - OS: Windows 10/11
 
 ## Project layout
+```
 D:\QA_MiniFramework\source
 │
 ├── config/                # API endpoints and config files
@@ -19,6 +20,7 @@ D:\QA_MiniFramework\source
 │       └── posts.post.negative.spec.ts
 ├── package.json           # Dependencies and scripts
 └── README.md
+```
 
 ## Install
 ```bash
