@@ -8,6 +8,11 @@
         "path": "/posts",
         "expect": ["userId", "id", "title", "body"]
       },
+      "getById": {
+        "method": "GET",
+        "path": "/posts/{id}",
+        "expect": ["userId", "id", "title", "body"]
+      },
       "create": {
         "method": "POST",
         "path": "/posts",
