@@ -8,12 +8,11 @@ on:
 
 jobs:
   test:
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]            # declare OS (can expand later)
         browser: [chromium, firefox, webkit]
-    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
@@ -33,19 +32,19 @@ jobs:
       - name: Run Playwright tests (per browser)
         run: npx playwright test --project=${{ matrix.browser }}
 
-      # Keep these so you still get a downloadable report per run
-      - name: Generate HTML report (ensure exists)
-        if: always()
-        run: |
-          echo "Report lives in playwright-report/"
-          if [ ! -d "playwright-report" ]; then
-            npx playwright show-report --reporter=html > /dev/null 2>&1 || true
-          fi
-
-      - name: Upload HTML report
+      # ---- CI OUTPUTS ----
+      - name: Upload HTML report (per browser)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report-${{ matrix.browser }}
           path: playwright-report
+          retention-days: 7
+
+      - name: Upload test artifacts (screenshots/traces/videos)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.browser }}
+          path: test-results
           retention-days: 7
