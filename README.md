@@ -77,3 +77,25 @@ npx playwright test "tests/ui/.*stage8.*\.spec\.ts"
 - Reports and artifacts are **local only**; they are not pushed to Git.  
 - Opening or viewing reports (npx playwright show-report reports) does **not** require the dev server; only running UI tests does.
 - Keep your dev server running if you execute UI tests manually
+
+---
+
+## Configuration & Secrets (Stage 11)
+
+This project uses environment variables for configuration.
+
+- **Local development**:  
+  Copy `.env.example` → `.env`, then adjust values as needed.
+
+- **CI (GitHub Actions)**:  
+  1. Go to your repo → **Settings** → **Secrets and variables** → **Actions**  
+  2. Click **New repository secret**  
+  3. Enter a name (e.g., `API_KEY`) and set its value  
+  4. In `.github/workflows/ci.yml`, reference it like:
+
+     ```yaml
+     env:
+       API_KEY: ${{ secrets.API_KEY }}
+     ```
+
+⚠️ Never commit real secrets or `.env` files into Git — only `.env.example` with safe defaults should be committed.
