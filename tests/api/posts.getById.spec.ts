@@ -4,30 +4,22 @@ import path from 'path';
 
 type Ep = {
   baseUrl: string;
-  endpoints: {
-    posts: {
-      getById: { method: string; path: string; expect: string[] };
-    };
-  };
+  endpoints: { posts: { getById: { path: string; expect: string[] } } };
 };
 
 const endpointsPath = path.join(__dirname, '../../config/endpoints.json');
 const endpoints: Ep = JSON.parse(fs.readFileSync(endpointsPath, 'utf-8'));
 
 test('[API] GET /posts/1 returns expected fields and id=1', async ({ request }) => {
-  const base = endpoints.baseUrl;
-  const ep = endpoints.endpoints.posts.getById;
-
-  // Use the templated path from endpoints.json
-  const url = `${base}${ep.path.replace('{id}', '1')}`;
+  const url = `${endpoints.baseUrl}${endpoints.endpoints.posts.getById.path.replace('{id}', '1')}`;
 
   const res = await request.get(url);
   expect(res.status(), 'Expect 200 OK').toBe(200);
 
   const body = await res.json();
 
-  // Basic shape checks
-  for (const key of ep.expect) {
+  // Required fields present
+  for (const key of endpoints.endpoints.posts.getById.expect) {
     expect(body, `missing field: ${key}`).toHaveProperty(key);
   }
 
