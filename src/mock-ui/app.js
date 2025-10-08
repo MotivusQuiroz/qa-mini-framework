@@ -1,91 +1,124 @@
 /**
- * Stage 7 – Step 2
+ * Stage 7 – Step 3
  * File: src/mock-ui/app.js
- * Objective: Fetch data from the configured API and render it inside #app.
- * Notes:
- *  - Reads /config/endpoints.json from project root (served by the dev server).
- *  - Renders a minimal table with a small subset of fields.
+ * Objective: Fetch data and render a minimal, testable UI with data-testid hooks.
  */
 
-(async function init() {
+(function init() {
   const root = document.getElementById('app');
 
-  // Basic helpers (minimal UX for this step)
+  // ---- helpers -------------------------------------------------------------
+
+  function clearRoot() {
+    root.innerHTML = '';
+  }
+
+  function el(tag, attrs = {}, children = []) {
+    const node = document.createElement(tag);
+    Object.entries(attrs).forEach(([k, v]) => {
+      if (k === 'dataset' && v && typeof v === 'object') {
+        Object.entries(v).forEach(([dk, dv]) => (node.dataset[dk] = String(dv)));
+      } else if (k === 'text') {
+        node.textContent = String(v);
+      } else {
+        node.setAttribute(k, String(v));
+      }
+    });
+    children.forEach((c) => node.appendChild(c));
+    return node;
+  }
+
+  // ---- renderers -----------------------------------------------------------
+
   function renderLoading() {
-    root.textContent = 'Loading…';
+    clearRoot();
+    root.appendChild(
+      el('div', { class: 'status', 'data-testid': 'loading', text: 'Loading…' })
+    );
   }
 
   function renderError(message) {
-    root.innerHTML = '';
-    const div = document.createElement('div');
-    div.textContent = `Error: ${message}`;
-    root.appendChild(div);
+    clearRoot();
+    root.appendChild(
+      el('div', {
+        class: 'status',
+        'data-testid': 'error',
+        text: `Error: ${message}`,
+      })
+    );
   }
 
   function renderPosts(posts) {
-    root.innerHTML = '';
+    clearRoot();
 
-    const heading = document.createElement('h2');
-    heading.textContent = 'Posts';
+    const heading = el('h2', { 'data-testid': 'posts-heading', text: 'Posts' });
+
+    const table = el('table', { 'data-testid': 'posts-table' }, [
+      (function buildThead() {
+        const tr = el('tr');
+        ['userId', 'id', 'title'].forEach((h) => {
+          tr.appendChild(el('th', { 'data-testid': `col-${h}`, text: h }));
+        });
+        return el('thead', {}, [tr]);
+      })(),
+      (function buildTbody() {
+        const tbody = el('tbody', { 'data-testid': 'posts-tbody' });
+        posts.slice(0, 10).forEach((p, idx) => {
+          const tr = el('tr', {
+            'data-testid': 'post-row',
+            dataset: { rowIndex: idx },
+          });
+
+          const cells = [
+            ['userId', p.userId],
+            ['id', p.id],
+            ['title', p.title],
+          ];
+
+          cells.forEach(([name, val]) => {
+            tr.appendChild(
+              el('td', { 'data-testid': `cell-${name}` , text: val ?? '' })
+            );
+          });
+
+          tbody.appendChild(tr);
+        });
+        return tbody;
+      })(),
+    ]);
+
+    const wrapper = el('div', { class: 'table-wrapper', 'data-testid': 'table-wrapper' }, [table]);
+
     root.appendChild(heading);
-
-    const table = document.createElement('table');
-    const thead = document.createElement('thead');
-    const trh = document.createElement('tr');
-    ['userId', 'id', 'title'].forEach((h) => {
-      const th = document.createElement('th');
-      th.textContent = h;
-      trh.appendChild(th);
-    });
-    thead.appendChild(trh);
-    table.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
-    // Limit rows for a minimal view
-    posts.slice(0, 10).forEach((p) => {
-      const tr = document.createElement('tr');
-      const tdUserId = document.createElement('td');
-      const tdId = document.createElement('td');
-      const tdTitle = document.createElement('td');
-
-      tdUserId.textContent = String(p.userId ?? '');
-      tdId.textContent = String(p.id ?? '');
-      tdTitle.textContent = String(p.title ?? '');
-
-      tr.appendChild(tdUserId);
-      tr.appendChild(tdId);
-      tr.appendChild(tdTitle);
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-
-    root.appendChild(table);
+    root.appendChild(wrapper);
   }
 
-  try {
-    renderLoading();
+  // ---- flow ----------------------------------------------------------------
 
-    // Load endpoints configuration served from project root
-    const cfgRes = await fetch('/config/endpoints.json', { cache: 'no-store' });
-    if (!cfgRes.ok) throw new Error(`Failed to load endpoints.json (${cfgRes.status})`);
-    const cfg = await cfgRes.json();
+  (async function run() {
+    try {
+      renderLoading();
 
-    const baseUrl = cfg.baseUrl;
-    const listPath = cfg.endpoints?.posts?.list?.path;
-    if (!baseUrl || !listPath) throw new Error('Invalid endpoints configuration');
+      // Load endpoints configuration from project root (served by dev server in Step 4)
+      const cfgRes = await fetch('/config/endpoints.json', { cache: 'no-store' });
+      if (!cfgRes.ok) throw new Error(`Failed to load endpoints.json (${cfgRes.status})`);
+      const cfg = await cfgRes.json();
 
-    // Fetch posts
-    const res = await fetch(`${baseUrl}${listPath}`);
-    if (!res.ok) throw new Error(`API returned ${res.status}`);
-    const data = await res.json();
+      const baseUrl = cfg.baseUrl;
+      const listPath = cfg.endpoints?.posts?.list?.path;
+      if (!baseUrl || !listPath) throw new Error('Invalid endpoints configuration');
 
-    // Render
-    if (Array.isArray(data)) {
-      renderPosts(data);
-    } else {
-      throw new Error('Unexpected response shape (expected an array)');
+      const res = await fetch(`${baseUrl}${listPath}`);
+      if (!res.ok) throw new Error(`API returned ${res.status}`);
+      const data = await res.json();
+
+      if (Array.isArray(data)) {
+        renderPosts(data);
+      } else {
+        throw new Error('Unexpected response shape (expected an array)');
+      }
+    } catch (err) {
+      renderError(err instanceof Error ? err.message : String(err));
     }
-  } catch (err) {
-    renderError(err instanceof Error ? err.message : String(err));
-  }
+  })();
 })();
