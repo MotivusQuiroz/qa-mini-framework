@@ -192,3 +192,50 @@ npx playwright show-report reports
 - README contains Quickstart, Repo Map, How to run tests, Reports & Artifacts, Configuration & Secrets, and Troubleshooting  
 - A new contributor can clone the repo, follow the README, and run tests successfully without extra guidance
 
+---
+
+## Final Demo Script (Stage 13)
+
+### One-liner bootstrap
+```bash
+git clone https://github.com/<your-username>/<your-repo>.git && cd <your-repo>/source && npm install && npx playwright install --with-deps && npx playwright test && npx playwright show-report reports
+```
+
+### Evidence
+- Add screenshot/GIF of an open HTML report showing all tests green.
+- Include at least one link to a successful CI run with uploaded report artifact.
+
+### Links
+- [Repository](https://github.com/<your-username>/<your-repo>)
+- [Latest CI Run](https://github.com/<your-username>/<your-repo>/actions)
+- [Report Artifact] (download from Actions → latest run → Artifacts)
+
+---
+
+## Quality Gate & Wrap-Up (Stage 14)
+
+### Lint & Format
+```bash
+npx prettier --write .
+npx eslint .
+```
+
+### Optional commit hooks
+Use Husky or simple `pre-commit` to enforce lint/format before commits (optional).
+
+### Tag and Release
+```bash
+git tag v1.0
+git push origin v1.0
+```
+
+Then create **GitHub Release Notes** summarizing features and linking the passing CI run.
+
+---
+
+## Definition of Done (Stage 14)
+
+- Prettier/ESLint run clean.
+- Optionally commit hooks active.
+- Repo tagged `v1.0` and GitHub Release created.
+- Evidence checklist complete and CI badge green.
