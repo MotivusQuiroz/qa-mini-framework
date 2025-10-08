@@ -1,8 +1,8 @@
 /**
  * Stage 6 – Step 2
  * File: tests/api/post-create-negative.stage6.spec.ts
- * Objective: Validate that the API correctly rejects a create request with an invalid payload,
- * returning the expected failure status code and not producing a valid resource body.
+ * Objective: Validate that the API rejects a create request with an invalid route,
+ * returning 400/404/405 and not producing a valid resource body.
  */
 
 import { test, expect } from '@playwright/test';
@@ -37,6 +37,7 @@ test.describe('Stage 6 – POST – Negative', () => {
 
     const response = await request.post(`${baseUrl}${invalidCreatePath}`, { data: payload });
 
+    // Expect real API behavior
     expect([400, 404, 405]).toContain(response.status());
 
     const contentType = response.headers()['content-type'] ?? '';

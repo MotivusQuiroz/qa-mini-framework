@@ -2,7 +2,7 @@
  * Stage 6 – Step 4
  * File: tests/api/post-create-missing-title.stage6.spec.ts
  * Objective: Validate that the API fails to create a new resource when a required field is missing,
- * returning the expected failure status code and ensuring the response does not contain a valid resource object.
+ * returning 400/422 and ensuring the response does not contain a valid resource object.
  */
 
 import { test, expect } from '@playwright/test';
@@ -35,6 +35,7 @@ test.describe('Stage 6 – POST – Negative (Missing Field)', () => {
 
     const response = await request.post(`${baseUrl}${create.path}`, { data: payload });
 
+    // Expect real API behavior: reject invalid payloads
     expect([400, 422]).toContain(response.status());
 
     const contentType = response.headers()['content-type'] ?? '';
