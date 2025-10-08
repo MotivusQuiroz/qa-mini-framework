@@ -2,16 +2,17 @@
  * Stage 8 – Step 4
  * File: tests/ui/ui-locator-policy.stage8.spec.ts
  * Objective: Enforce "testid-only" locator policy across Stage 8 UI specs.
+ * Portable across OS/CI (no hard-coded paths).
  */
 
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 
-const ROOT = 'D:\\QA_MiniFramework\\source';
-const TARGET_DIR = path.join(ROOT, 'tests', 'ui');
+// Portable dir: this spec's folder (tests/ui)
+const TARGET_DIR = __dirname;
 
-// Only Stage 8 UI specs, EXCLUDING this policy spec itself
+// Stage 8 UI specs only, excluding this policy file
 const FILE_MATCH = /\.stage8\.spec\.ts$/;
 const EXCLUDE = new Set(['ui-locator-policy.stage8.spec.ts']);
 
@@ -21,7 +22,7 @@ const ALLOWED = [
   /\.getByTestId\s*\(/,         // locator.getByTestId('...')
 ];
 
-// Forbidden patterns (very broad on purpose)
+// Forbidden patterns (broad on purpose)
 const FORBIDDEN: Array<{ name: string; rx: RegExp }> = [
   { name: 'page.$ / page.$$', rx: /\bpage\.\${1,2}\s*\(/ },
   { name: 'raw locator with string', rx: /\blocator\s*\(\s*(['"`]).+?\1\s*\)/ },
@@ -31,14 +32,16 @@ const FORBIDDEN: Array<{ name: string; rx: RegExp }> = [
   { name: 'getByLabel', rx: /\bgetByLabel\s*\(/ },
   { name: 'getByAltText', rx: /\bgetByAltText\s*\(/ },
   { name: 'getByTitle', rx: /\bgetByTitle\s*\(/ },
-  { name: 'testId() shorthand', rx: /\btestId\s*\(/ },
+  { name: 'testId() shorthand', rx: /\btestId\s*\(/ }, // disallow alt API here
   { name: 'text= selector', rx: /text\s*=\s*['"`]/ },
   { name: 'xpath selector', rx: /['"`]\s*\/\/.+['"`]/ },
   { name: 'css selector #/.', rx: /['"`]\s*[#\.][A-Za-z0-9_-]/ },
 ];
 
+// List Stage 8 specs in this directory
 function listStage8Specs(dir: string): string[] {
-  return fs.readdirSync(dir)
+  return fs
+    .readdirSync(dir)
     .filter(f => FILE_MATCH.test(f))
     .filter(f => !EXCLUDE.has(f))
     .map(f => path.join(dir, f));
@@ -56,8 +59,7 @@ test.describe('Stage 8 – Locator Policy (testid-only)', () => {
       const src = fs.readFileSync(file, 'utf-8');
 
       // Must include at least one allowed usage
-      const hasAllowed = ALLOWED.some(rx => rx.test(src));
-      expect(hasAllowed).toBeTruthy();
+      expect(ALLOWED.some(rx => rx.test(src))).toBeTruthy();
 
       // Must not include any forbidden usage
       const hits: string[] = [];
