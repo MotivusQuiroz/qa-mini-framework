@@ -1,0 +1,94 @@
+/* Stage 7 – Step 3: Minimal styling for the mock UI */
+
+:root {
+  --bg: #0f1115;
+  --panel: #151922;
+  --ink: #e6e8ee;
+  --muted: #9aa3b2;
+  --accent: #3a7afe;
+  --border: #252a36;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+main {
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 16px;
+}
+
+h1 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+h2 {
+  margin: 16px 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.status {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #131722;
+  color: var(--muted);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+}
+
+thead th {
+  text-align: left;
+  font-weight: 600;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  background: #121621;
+}
+
+tbody td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr:nth-child(odd) {
+  background: #121621;
+}
+
+tbody tr:hover {
+  background: #1a2030;
+}
+
+code {
+  background: #0e1320;
+  border: 1px solid var(--border);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
