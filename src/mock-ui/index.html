@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Stage 7 – Mock UI</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Mock UI – Minimal App</h1>
-  <div id="app">
-    <!-- Data from API will be rendered here -->
-  </div>
+  <main>
+    <h1 data-testid="title">Mock UI – Minimal App</h1>
+    <div id="app" class="panel" data-testid="app-root">
+      <!-- Content injected by app.js -->
+    </div>
+  </main>
   <script src="app.js"></script>
 </body>
 </html>
