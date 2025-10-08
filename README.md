@@ -4,6 +4,30 @@
 
 Mini Playwright framework with API tests (GET/POST), basic reporting, and clean structure.
 
+
+## Quickstart
+
+Clone and run from a clean machine:
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>/source
+
+# 2. Install dependencies
+npm install
+
+# 3. Install Playwright browsers
+npx playwright install --with-deps
+
+# 4. Run all tests
+npx playwright test
+
+# 5. Open the last HTML report
+npx playwright show-report reports
+```
+
+
 ## Prereqs
 - Node.js LTS installed (`node -v`, `npm -v`)
 - Git installed (`git --version`)
