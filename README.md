@@ -205,8 +205,8 @@ git clone https://github.com/<your-username>/<your-repo>.git && cd <your-repo>/s
 ![Test Report Screenshot](docs/demo.png)
 
 ### Links
-- [Repository](https://github.com/<your-username>/<your-repo>)
-- [Latest CI Run](https://github.com/<your-username>/<your-repo>/actions)
+- [Repository](https://github.com/MotivusQuiroz/qa-mini-framework)
+- [Latest CI Run](https://github.com/MotivusQuiroz/qa-mini-framework/actions)
 - [Report Artifact] (download from Actions → latest run → Artifacts)
 
 ---
