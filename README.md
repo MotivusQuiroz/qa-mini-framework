@@ -201,9 +201,8 @@ npx playwright show-report reports
 git clone https://github.com/<your-username>/<your-repo>.git && cd <your-repo>/source && npm install && npx playwright install --with-deps && npx playwright test && npx playwright show-report reports
 ```
 
-### Evidence
-- Add screenshot/GIF of an open HTML report showing all tests green.
-- Include at least one link to a successful CI run with uploaded report artifact.
+### Demo Evidence
+![Test Report Screenshot](docs/demo.png)
 
 ### Links
 - [Repository](https://github.com/<your-username>/<your-repo>)
