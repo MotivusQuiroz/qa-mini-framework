@@ -1,5 +1,7 @@
 # QA Mini Framework (Playwright)
 
+[![Playwright Tests](https://github.com/MotivusQuiroz/qa-mini-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/MotivusQuiroz/qa-mini-framework/actions/workflows/ci.yml)
+
 Mini Playwright framework with API tests (GET/POST), basic reporting, and clean structure.
 
 ## Prereqs
