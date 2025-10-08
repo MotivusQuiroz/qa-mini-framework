@@ -30,3 +30,11 @@ test('[API] GET /posts returns an array with expected fields', async ({ request 
     expect(data[0]).toHaveProperty(key);
   }
 });
+
+test('[API] GET /postz (invalid path) should return 404', async ({ request }) => {
+  // We intentionally use a wrong path to force a 404 from JSONPlaceholder
+  const baseUrl = endpoints.baseUrl;
+  const res = await request.get(`${baseUrl}/postz`);
+  expect(res.status(), 'Expect 404 on invalid endpoint').toBe(404);
+});
+
