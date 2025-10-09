@@ -4,13 +4,16 @@
   "private": true,
   "devDependencies": {
     "@playwright/test": "^1.56.0",
-    "@types/node": "^24.7.0"
+    "@types/node": "^24.7.0",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.37.0",
+    "prettier": "^3.6.2"
   },
   "scripts": {
-	"test:api": "npx playwright test tests/api",
-	"test:ui": "npx playwright test tests/ui",
-	"test:all": "npx playwright test",
-	"report:open": "npx playwright show-report reports",
-	"dev:ui": "http-server -p 5173 -c-1 ."
+    "test:api": "npx playwright test tests/api",
+    "test:ui": "npx playwright test tests/ui",
+    "test:all": "npx playwright test",
+    "report:open": "npx playwright show-report reports",
+    "dev:ui": "http-server -p 5173 -c-1 ."
   }
 }
