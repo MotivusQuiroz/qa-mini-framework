@@ -4,7 +4,6 @@
 
 Mini Playwright framework with API tests (GET/POST), basic reporting, and clean structure.
 
-
 ## Quickstart
 
 Clone and run from a clean machine:
@@ -27,13 +26,14 @@ npx playwright test
 npx playwright show-report reports
 ```
 
-
 ## Prereqs
+
 - Node.js LTS installed (`node -v`, `npm -v`)
 - Git installed (`git --version`)
 - OS: Windows 10/11
 
 ## Project layout
+
 ```
 D:\QA_MiniFramework\source
 │
@@ -49,11 +49,13 @@ D:\QA_MiniFramework\source
 ```
 
 ## Install
+
 ```bash
 npm ci || npm install
 ```
 
 ## Useful scripts
+
 ```bash
 # run all tests (all projects)
 npm run test:all
@@ -69,6 +71,7 @@ npm run report:open
 ```
 
 ## Notes
+
 - Reports are generated locally in the `reports/` folder and are **not** committed to Git.
 - API base: https://jsonplaceholder.typicode.com (public fake API).
 
@@ -77,28 +80,35 @@ npm run report:open
 ## Reports & Artifacts (Stage 9)
 
 ### Generate an HTML report
+
 From the project root:
+
 ```bash
 npx playwright test
 ```
 
 ### Open the latest report
+
 ```bash
 npx playwright show-report reports
 ```
 
 ### Where to find artifacts
+
 - HTML report: `playwright-report/index.html` (or `reports/` if configured that way).
 - Test artifacts (screenshots, traces, videos): stored under `test-results/`.
 
 ### Run filtered tests
+
 Run only Stage 8 UI tests, for example:
+
 ```bash
 npx playwright test "tests/ui/.*stage8.*\.spec\.ts"
 ```
 
 ### Notes
-- Reports and artifacts are **local only**; they are not pushed to Git.  
+
+- Reports and artifacts are **local only**; they are not pushed to Git.
 - Opening or viewing reports (npx playwright show-report reports) does **not** require the dev server; only running UI tests does.
 - Keep your dev server running if you execute UI tests manually
 
@@ -111,10 +121,10 @@ This project uses environment variables for configuration.
 - **Local development**:  
   Copy `.env.example` → `.env`, then adjust values as needed.
 
-- **CI (GitHub Actions)**:  
-  1. Go to your repo → **Settings** → **Secrets and variables** → **Actions**  
-  2. Click **New repository secret**  
-  3. Enter a name (e.g., `API_KEY`) and set its value  
+- **CI (GitHub Actions)**:
+  1. Go to your repo → **Settings** → **Secrets and variables** → **Actions**
+  2. Click **New repository secret**
+  3. Enter a name (e.g., `API_KEY`) and set its value
   4. In `.github/workflows/ci.yml`, reference it like:
 
      ```yaml
@@ -149,26 +159,31 @@ source/
 ## Running Tests (Stage 12)
 
 ### Run API tests only
+
 ```bash
 npx playwright test "tests/api/.*\.spec\.ts"
 ```
 
 ### Run UI tests only
+
 ```bash
 npx playwright test "tests/ui/.*\.spec\.ts"
 ```
 
 ### Run Stage 6 API specs only
+
 ```bash
 npx playwright test "tests/api/.*stage6.*\.spec\.ts"
 ```
 
 ### Run all tests
+
 ```bash
 npx playwright test
 ```
 
 ### Open the last HTML report
+
 ```bash
 npx playwright show-report reports
 ```
@@ -179,7 +194,7 @@ npx playwright show-report reports
 
 - **Error: dotenv not found** → run `npm install dotenv --save-dev`
 - **Tests fail with 201 instead of 400/422** → jsonplaceholder always returns 201 for POST; tests allow both 201 and error codes
-- **No tests found** → ensure the regex is quoted in Windows CMD:  
+- **No tests found** → ensure the regex is quoted in Windows CMD:
   ```bat
   npx playwright test "tests/api/.*stage6.*\.spec\.ts"
   ```
@@ -189,7 +204,7 @@ npx playwright show-report reports
 
 ## Definition of Done (Stage 12)
 
-- README contains Quickstart, Repo Map, How to run tests, Reports & Artifacts, Configuration & Secrets, and Troubleshooting  
+- README contains Quickstart, Repo Map, How to run tests, Reports & Artifacts, Configuration & Secrets, and Troubleshooting
 - A new contributor can clone the repo, follow the README, and run tests successfully without extra guidance
 
 ---
@@ -197,14 +212,17 @@ npx playwright show-report reports
 ## Final Demo Script (Stage 13)
 
 ### One-liner bootstrap
+
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git && cd <your-repo>/source && npm install && npx playwright install --with-deps && npx playwright test && npx playwright show-report reports
+git clone https://github.com/MotivusQuiroz/qa-mini-framework.git && cd qa-mini-framework/source && npm install && npx playwright install --with-deps && npx playwright test && npx playwright show-report reports
 ```
 
 ### Demo Evidence
+
 ![Test Report Screenshot](docs/demo.png)
 
 ### Links
+
 - [Repository](https://github.com/MotivusQuiroz/qa-mini-framework)
 - [Latest CI Run](https://github.com/MotivusQuiroz/qa-mini-framework/actions)
 - [Report Artifact] (download from Actions → latest run → Artifacts)
@@ -214,15 +232,18 @@ git clone https://github.com/<your-username>/<your-repo>.git && cd <your-repo>/s
 ## Quality Gate & Wrap-Up (Stage 14)
 
 ### Lint & Format
+
 ```bash
 npx prettier --write .
 npx eslint .
 ```
 
 ### Optional commit hooks
+
 Use Husky or simple `pre-commit` to enforce lint/format before commits (optional).
 
 ### Tag and Release
+
 ```bash
 git tag v1.0
 git push origin v1.0
