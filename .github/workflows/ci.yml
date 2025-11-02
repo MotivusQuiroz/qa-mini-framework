@@ -2,9 +2,9 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
   test:
@@ -29,6 +29,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Start mock UI server
+        run: npx http-server -p 5173 -c-1 . &
+        
       - name: Run Playwright tests (per browser)
         run: npx playwright test --project=${{ matrix.browser }}
 
