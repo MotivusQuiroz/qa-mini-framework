@@ -19,10 +19,13 @@ npm install
 # 3. Install Playwright browsers
 npx playwright install --with-deps
 
-# 4. Run all tests
+# 4. Start mock UI server
+npx http-server -p 5173 -c-1 . &
+		
+# 5. Run all tests
 npx playwright test
 
-# 5. Open the last HTML report
+# 6. Open the last HTML report
 npx playwright show-report reports
 ```
 
