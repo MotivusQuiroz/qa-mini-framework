@@ -214,7 +214,7 @@ npx playwright show-report reports
 ### One-liner bootstrap
 
 ```bash
-git clone https://github.com/MotivusQuiroz/qa-mini-framework.git && cd qa-mini-framework/source && npm install && npx playwright install --with-deps && npx playwright test && npx playwright show-report reports
+git clone https://github.com/MotivusQuiroz/qa-mini-framework.git && cd qa-mini-framework/source && npm install && npx playwright install --with-deps && npx http-server src/mock-ui -p 5173 -c-1 . & npx playwright test && npx playwright show-report
 ```
 
 ### Demo Evidence
